@@ -1,7 +1,13 @@
 services:
+  list.records:
+    class: TrackerBundle\Services\ListRecords
+    arguments: ["@doctrine.orm.entity_manager"]
+  list.posts:
+    class: TrackerBundle\Services\ListPosts
+    arguments: ["@doctrine.orm.entity_manager"]
   search.record:
-    class: TrackerBundle\Services\SearchRecordByIdUseCase
+    class: TrackerBundle\Services\SearchRecordById
     arguments: ["@doctrine.orm.entity_manager"]
   search.post:
-    class: TrackerBundle\Services\SearchPostByIdUseCase
+    class: TrackerBundle\Services\SearchPostById
     arguments: ["@doctrine.orm.entity_manager"]

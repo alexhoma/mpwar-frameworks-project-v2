@@ -5,7 +5,7 @@ namespace TrackerBundle\Services;
 use BlogBundle\Entity\Post;
 use Doctrine\ORM\EntityManager;
 
-class SearchPostByIdUseCase
+class SearchPostById
 {
     private $entityManager;
 
@@ -16,7 +16,7 @@ class SearchPostByIdUseCase
         $this->entityManager = $entityManager;
     }
 
-    function __invoke($postId)
+    public function __invoke($postId)
     {
         $post = $this->entityManager
             ->getRepository(Post::class)

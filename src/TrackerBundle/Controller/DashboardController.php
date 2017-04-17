@@ -3,8 +3,10 @@
 namespace TrackerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use TrackerBundle\Services\SearchPostByIdUseCase;
-use TrackerBundle\Services\SearchRecordByIdUseCase;
+use TrackerBundle\Services\ListPosts;
+use TrackerBundle\Services\ListRecords;
+use TrackerBundle\Services\SearchPostById;
+use TrackerBundle\Services\SearchRecordById;
 
 class DashboardController extends Controller
 {
@@ -13,18 +15,16 @@ class DashboardController extends Controller
      * Displays two lists:
      *  - Posts list
      *  - Records list
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function dashboardAction()
     {
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $records = $entityManager
-            ->getRepository('TrackerBundle\Entity\Record')
-            ->findAll();
-        $posts = $entityManager
-            ->getRepository('BlogBundle\Entity\Post')
-            ->findAll();
+        /** @var ListRecords $listRecords */
+        $listRecords = $this->get('list.records');
+        $records     = $listRecords();
+
+        /** @var ListPosts $listPosts */
+        $listPosts = $this->get('list.posts');
+        $posts     = $listPosts();
 
         return $this->render('TrackerBundle:Tracker:dashboard.html.twig', array(
             'records' => $records,
@@ -38,9 +38,9 @@ class DashboardController extends Controller
      */
     public function recordAction($recordId)
     {
-        /** @var SearchRecordByIdUseCase $searchRecordByIdUseCase */
-        $searchRecordByIdUseCase = $this->get('search.record');
-        $record = $searchRecordByIdUseCase($recordId);
+        /** @var SearchRecordById $searchRecordById */
+        $searchRecordById = $this->get('search.record');
+        $record           = $searchRecordById($recordId);
 
         return $this->render('TrackerBundle:Tracker:recordDetail.html.twig', array(
             'record' => $record
@@ -53,13 +53,13 @@ class DashboardController extends Controller
      */
     public function postRecordsAction($postId)
     {
-        /** @var SearchPostByIdUseCase $searchPostByIdUseCase */
-        $searchPostByIdUseCase = $this->get('search.post');
-        $post = $searchPostByIdUseCase($postId);
+        /** @var SearchPostById $searchPostById */
+        $searchPostById = $this->get('search.post');
+        $post           = $searchPostById($postId);
 
-        // get records
+        // get post visits (post records)
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $records = $entityManager
+        $records       = $entityManager
             ->getRepository('TrackerBundle\Entity\Record')
             ->findBy(['post' => $post]);
 
