@@ -43,14 +43,21 @@ class DashboardController extends Controller
         $record = $entityManager
             ->getRepository('TrackerBundle\Entity\Record')
             ->findOneBy(['id' => $recordId]);
-
-        if (!$record) {
-            throw $this->createNotFoundException('Record not found!');
-        }
+        $this->ensureRecordExists($record);
 
         return $this->render('TrackerBundle:Tracker:recordDetail.html.twig', array(
             'record' => $record
         ));
+    }
+    
+    /**
+     * @param $record
+     */
+    private function ensureRecordExists($record)
+    {
+        if (!$record) {
+            throw $this->createNotFoundException('Record not found!');
+        }
     }
 
     /**
