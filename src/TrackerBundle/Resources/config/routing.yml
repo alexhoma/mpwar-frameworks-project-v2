@@ -4,10 +4,10 @@ tracker_dashboard:
     defaults:  { _controller: TrackerBundle:Dashboard:dashboard }
 tracker_record:
     path:      /tracker/record/{recordId}
-    defaults:  { _controller: TrackerBundle:Dashboard:recordDetail }
+    defaults:  { _controller: TrackerBundle:Dashboard:record }
 post_records:
     path:      /tracker/post-records/{postId}
-    defaults:  { _controller: TrackerBundle:Dashboard:postRecordsDetail }
+    defaults:  { _controller: TrackerBundle:Dashboard:postRecords }
 track:
     path:      /tracker/track
     defaults:  { _controller: TrackerBundle:Tracker:track }

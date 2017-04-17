@@ -37,7 +37,7 @@ class DashboardController extends Controller
      * @param $recordId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function recordDetailAction($recordId)
+    public function recordAction($recordId)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $record = $entityManager
@@ -54,21 +54,20 @@ class DashboardController extends Controller
     }
 
     /**
-     * Show single post records/visits
-     * Displays a list of records related to a single post
+     * Shows a list of records related to a post
+     * The list of "visits" tracked of a post.
      *
      * @param $postId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function postRecordsDetailAction($postId)
+    public function postRecordsAction($postId)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
 
         // get post
         $post = $entityManager
             ->getRepository('BlogBundle\Entity\Post')
-            ->findOneBy(['id' => $postId]);
-
+            ->find($postId);
         $this->ensurePostExists($post);
 
         // get records
@@ -85,7 +84,7 @@ class DashboardController extends Controller
     /**
      * @param $post
      */
-    private function ensurePostExists($post): void
+    private function ensurePostExists($post)
     {
         if (!$post) {
             throw $this->createNotFoundException('Post not found!');
