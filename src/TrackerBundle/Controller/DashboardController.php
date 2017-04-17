@@ -69,9 +69,7 @@ class DashboardController extends Controller
             ->getRepository('BlogBundle\Entity\Post')
             ->findOneBy(['id' => $postId]);
 
-        if (!$post) {
-            throw $this->createNotFoundException('Post not found!');
-        }
+        $this->ensurePostExists($post);
 
         // get records
         $records = $entityManager
@@ -82,5 +80,15 @@ class DashboardController extends Controller
             'post' => $post,
             'records' => $records
         ));
+    }
+
+    /**
+     * @param $post
+     */
+    private function ensurePostExists($post): void
+    {
+        if (!$post) {
+            throw $this->createNotFoundException('Post not found!');
+        }
     }
 }
