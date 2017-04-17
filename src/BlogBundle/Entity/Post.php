@@ -93,8 +93,7 @@ class Post
     {
         return $this->datetime;
     }
-
-
+    
     /**
      * @param mixed $slug
      */

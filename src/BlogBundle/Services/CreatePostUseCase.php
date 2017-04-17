@@ -13,11 +13,12 @@ class CreatePostUseCase
     private $slugify;
 
     public function __construct(
-        EntityManager $entityManager
+        EntityManager $entityManager,
+        Slugify $slugify
     )
     {
         $this->entityManager = $entityManager;
-        $this->slugify = new Slugify();
+        $this->slugify = $slugify;
     }
 
     public function __invoke(Post $post)

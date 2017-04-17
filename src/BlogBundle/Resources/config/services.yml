@@ -4,6 +4,7 @@ services:
     class: BlogBundle\Services\CreatePostUseCase
     arguments:
       - "@doctrine.orm.entity_manager"
+      - "@slugify"
   blog_post.list:
     class: BlogBundle\Services\ListPosts
     arguments:

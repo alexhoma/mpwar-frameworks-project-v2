@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new TrackerBundle\TrackerBundle(),
             new AlertBundle\AlertBundle(),
             new BlogBundle\BlogBundle(),
+            new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
