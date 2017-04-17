@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use TrackerBundle\Entity\Record;
-use TrackerBundle\Event\RecordTrackedEvent;
+use TrackerBundle\Services\CreateRecordUseCase;
+use TrackerBundle\Services\SearchPostBySlug;
 
 
 class TrackerController extends Controller
@@ -22,7 +23,11 @@ class TrackerController extends Controller
     public function trackAction(Request $request)
     {
         $tracked = json_decode($request->getContent());
-        $post = $this->getPostBySlug($tracked->postSlug);
+
+        /** @var SearchPostBySlug $searchPostBySlug */
+        $searchPostBySlug = $this->get('search.post.by_slug');
+        $post = $searchPostBySlug($tracked->postSlug);
+
         $record = new Record(
             $post,
             $tracked->device,
@@ -33,41 +38,11 @@ class TrackerController extends Controller
             $tracked->cookieEnabled
         );
 
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $entityManager->persist($record);
-        $entityManager->flush();
-
-        $this->throwRecordTrackerEvent($record);
+        /** @var CreateRecordUseCase $createRecordUseCase */
+        $createRecordUseCase = $this->get('create.record');
+        $createRecordUseCase($record);
 
         return new JsonResponse(array('tracked' => true));
     }
 
-    /**
-     * Returns a single post by the slug
-     *
-     * @param $slug
-     * @return mixed
-     */
-    private function getPostBySlug($slug)
-    {
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $post = $entityManager
-            ->getRepository('BlogBundle\Entity\Post')
-            ->findOneBy(['slug' => $slug]);
-
-        return $post;
-    }
-
-    /**
-     * Throws an event when a record is
-     *
-     * @param $record
-     */
-    private function throwRecordTrackerEvent($record)
-    {
-        $recordTrackedEvent = new RecordTrackedEvent($record);
-        $event = $this->get('event_dispatcher');
-
-        $event->dispatch('record.tracked', $recordTrackedEvent);
-    }
 }

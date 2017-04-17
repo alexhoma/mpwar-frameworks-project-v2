@@ -10,9 +10,9 @@ class RecordTrackedEvent extends Event
 {
     private $record;
 
-    public function __construct(Record $aRecord)
+    public function __construct(Record $record)
     {
-        $this->record = $aRecord;
+        $this->record = $record;
     }
 
     public function getRecord()
