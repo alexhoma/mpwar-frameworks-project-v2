@@ -1,0 +1,37 @@
+TrackerBundle\Entity\Record:
+  type: entity
+  table: record
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    device:
+      type: string
+      length: 100
+    operatingSystem:
+      type: string
+      length: 100
+      column: operating_system
+    browser:
+      type: string
+      length: 100
+    version:
+      type: string
+      length: 100
+    language:
+      type: string
+      length: 100
+    cookieEnabled:
+      type: boolean
+      column: cookie_enabled
+    datetime:
+      type: datetime
+  manyToOne:
+    post:
+      targetEntity: BlogBundle\Entity\Post
+      joinColumn:
+        name: post_id
+        referencedColumnName: id
+

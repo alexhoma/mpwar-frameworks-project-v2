@@ -1,6 +1,6 @@
 <?php
 
-namespace BlogBundle\DependencyInjection;
+namespace TrackerBundle\DependencyInjection;
 
 
 use Symfony\Component\Config\FileLocator;
@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 
-class BlogExtension extends Extension
+class TrackerExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {

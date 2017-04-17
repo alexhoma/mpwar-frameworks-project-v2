@@ -13,53 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Record
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
     private $id;
-
-    /**
-     * Many Records have One Post
-     * @ORM\ManyToOne(targetEntity="BlogBundle\Entity\Post")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-     */
     private $post;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
     private $device;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
     private $operatingSystem;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
     private $browser;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
     private $version;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
     private $language;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
     private $cookieEnabled;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
     private $datetime;
 
     /**
@@ -93,7 +54,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId(): int
     {
@@ -101,7 +62,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return Post
      */
     public function getPost(): Post
     {
@@ -109,7 +70,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDevice(): string
     {
@@ -117,7 +78,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getOperatingSystem(): string
     {
@@ -125,7 +86,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getBrowser(): string
     {
@@ -133,7 +94,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getVersion(): string
     {
@@ -141,7 +102,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getLanguage(): string
     {
@@ -149,7 +110,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getCookieEnabled(): bool
     {
@@ -157,7 +118,7 @@ class Record
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
     public function getDatetime(): DateTime
     {
