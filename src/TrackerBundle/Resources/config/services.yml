@@ -1,1 +1,7 @@
 services:
+  search.record:
+    class: TrackerBundle\Services\SearchRecordUseCase
+    arguments: ["@doctrine.orm.entity_manager"]
+  search.post:
+    class: TrackerBundle\Services\SearchPostUseCase
+    arguments: ["@doctrine.orm.entity_manager"]

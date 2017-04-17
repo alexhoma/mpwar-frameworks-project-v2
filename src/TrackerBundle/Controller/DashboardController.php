@@ -3,6 +3,7 @@
 namespace TrackerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use TrackerBundle\Services\SearchRecordUseCase;
 
 class DashboardController extends Controller
 {
@@ -33,51 +34,30 @@ class DashboardController extends Controller
     /**
      * Show single record details
      * Displays the user agent data of a single record
-     *
-     * @param $recordId
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function recordAction($recordId)
     {
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $record = $entityManager
-            ->getRepository('TrackerBundle\Entity\Record')
-            ->findOneBy(['id' => $recordId]);
-        $this->ensureRecordExists($record);
+        /** @var SearchRecordUseCase $searchRecordUseCase */
+        $searchRecordUseCase = $this->get('search.record');
+        $record = $searchRecordUseCase($recordId);
 
         return $this->render('TrackerBundle:Tracker:recordDetail.html.twig', array(
             'record' => $record
         ));
     }
-    
-    /**
-     * @param $record
-     */
-    private function ensureRecordExists($record)
-    {
-        if (!$record) {
-            throw $this->createNotFoundException('Record not found!');
-        }
-    }
 
     /**
      * Shows a list of records related to a post
      * The list of "visits" tracked of a post.
-     *
-     * @param $postId
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function postRecordsAction($postId)
     {
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-
-        // get post
-        $post = $entityManager
-            ->getRepository('BlogBundle\Entity\Post')
-            ->find($postId);
-        $this->ensurePostExists($post);
+        /** @var SearchRecordUseCase $searchPostUseCase */
+        $searchPostUseCase = $this->get('search.post');
+        $post = $searchPostUseCase($postId);
 
         // get records
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $records = $entityManager
             ->getRepository('TrackerBundle\Entity\Record')
             ->findBy(['post' => $post]);
@@ -86,15 +66,5 @@ class DashboardController extends Controller
             'post' => $post,
             'records' => $records
         ));
-    }
-
-    /**
-     * @param $post
-     */
-    private function ensurePostExists($post)
-    {
-        if (!$post) {
-            throw $this->createNotFoundException('Post not found!');
-        }
     }
 }
