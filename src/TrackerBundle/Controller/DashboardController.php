@@ -3,7 +3,8 @@
 namespace TrackerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use TrackerBundle\Services\SearchRecordUseCase;
+use TrackerBundle\Services\SearchPostByIdUseCase;
+use TrackerBundle\Services\SearchRecordByIdUseCase;
 
 class DashboardController extends Controller
 {
@@ -37,9 +38,9 @@ class DashboardController extends Controller
      */
     public function recordAction($recordId)
     {
-        /** @var SearchRecordUseCase $searchRecordUseCase */
-        $searchRecordUseCase = $this->get('search.record');
-        $record = $searchRecordUseCase($recordId);
+        /** @var SearchRecordByIdUseCase $searchRecordByIdUseCase */
+        $searchRecordByIdUseCase = $this->get('search.record');
+        $record = $searchRecordByIdUseCase($recordId);
 
         return $this->render('TrackerBundle:Tracker:recordDetail.html.twig', array(
             'record' => $record
@@ -52,9 +53,9 @@ class DashboardController extends Controller
      */
     public function postRecordsAction($postId)
     {
-        /** @var SearchRecordUseCase $searchPostUseCase */
-        $searchPostUseCase = $this->get('search.post');
-        $post = $searchPostUseCase($postId);
+        /** @var SearchPostByIdUseCase $searchPostByIdUseCase */
+        $searchPostByIdUseCase = $this->get('search.post');
+        $post = $searchPostByIdUseCase($postId);
 
         // get records
         $entityManager = $this->get('doctrine.orm.default_entity_manager');

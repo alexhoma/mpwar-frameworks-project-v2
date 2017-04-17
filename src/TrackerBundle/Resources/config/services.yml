@@ -1,7 +1,7 @@
 services:
   search.record:
-    class: TrackerBundle\Services\SearchRecordUseCase
+    class: TrackerBundle\Services\SearchRecordByIdUseCase
     arguments: ["@doctrine.orm.entity_manager"]
   search.post:
-    class: TrackerBundle\Services\SearchPostUseCase
+    class: TrackerBundle\Services\SearchPostByIdUseCase
     arguments: ["@doctrine.orm.entity_manager"]

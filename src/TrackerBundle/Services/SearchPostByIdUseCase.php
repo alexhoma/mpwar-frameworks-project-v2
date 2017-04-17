@@ -5,7 +5,7 @@ namespace TrackerBundle\Services;
 use BlogBundle\Entity\Post;
 use Doctrine\ORM\EntityManager;
 
-class SearchPostUseCase
+class SearchPostByIdUseCase
 {
     private $entityManager;
 

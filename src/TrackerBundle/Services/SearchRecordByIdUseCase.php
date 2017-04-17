@@ -5,7 +5,7 @@ namespace TrackerBundle\Services;
 use Doctrine\ORM\EntityManager;
 use TrackerBundle\Entity\Record;
 
-class SearchRecordUseCase
+class SearchRecordByIdUseCase
 {
     private $entityManager;
 
