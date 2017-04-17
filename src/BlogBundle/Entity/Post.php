@@ -6,40 +6,17 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="post")
- */
 class Post
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
     private $slug;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
     private $title;
-
-    /**
-     * @ORM\Column(type="text")
-     */
     private $description;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
     private $datetime;
 
-
+    /**
+     * Post constructor.
+     */
     public function __construct()
     {
         $this->records = new ArrayCollection();

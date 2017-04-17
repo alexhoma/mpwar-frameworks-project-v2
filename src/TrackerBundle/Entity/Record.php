@@ -5,12 +5,8 @@ namespace TrackerBundle\Entity;
 
 use BlogBundle\Entity\Post;
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="record")
- */
+
 class Record
 {
     private $id;
