@@ -6,9 +6,6 @@ use BlogBundle\Entity\Post;
 use Cocur\Slugify\Slugify;
 use BlogBundle\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 class BlogController extends Controller
@@ -37,6 +34,7 @@ class BlogController extends Controller
 
     /**
      * Shows post detail
+     *
      * @param $postSlug
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -56,6 +54,7 @@ class BlogController extends Controller
 
     /**
      * Guard clause to ensure the post we are looking exists
+     * 
      * @param $postSlug
      * @param $post
      */
@@ -80,7 +79,7 @@ class BlogController extends Controller
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $post      = $form->getData();
             $postTitle = $post->getTitle();
 
