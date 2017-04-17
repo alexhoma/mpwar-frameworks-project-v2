@@ -26,7 +26,9 @@ class BlogController extends Controller
     public function blogAction()
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $posts         = $entityManager->getRepository('BlogBundle\Entity\Post')->findAll();
+        $posts = $entityManager
+            ->getRepository('BlogBundle\Entity\Post')
+            ->findAll();
 
         return $this->render('BlogBundle:Blog:blog.html.twig', array(
             'posts' => $posts,
@@ -35,19 +37,17 @@ class BlogController extends Controller
 
     /**
      * Shows post detail
+     * @param $postSlug
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function postAction($postSlug)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $post          = $entityManager
+        $post = $entityManager
             ->getRepository('BlogBundle\Entity\Post')
             ->findOneBy(['slug' => $postSlug]);
 
-        if (!$post) {
-            throw $this->createNotFoundException(
-                'No post found for this: ' . $postSlug
-            );
-        }
+        $this->ensurePostExists($postSlug, $post);
 
         return $this->render('BlogBundle:Blog:post.html.twig', array(
             'post' => $post
@@ -55,33 +55,29 @@ class BlogController extends Controller
     }
 
     /**
+     * Guard clause to ensure the post we are looking exists
+     * @param $postSlug
+     * @param $post
+     */
+    private function ensurePostExists($postSlug, $post)
+    {
+        if (!$post) {
+            throw $this->createNotFoundException(
+                'No post found for this slug: ' . $postSlug
+            );
+        }
+    }
+
+    /**
      * Create new post or show form
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createPostAction(Request $request)
     {
         $post = new Post();
 
         $form = $this->createForm(PostType::class, $post);
-//            $this->createFormBuilder($post)
-//            ->add('title', TextType::class, array(
-//                'attr' => array(
-//                    'class' => 'form-control'
-//                )
-//            ))
-//            ->add('description', TextareaType::class, array(
-//                'attr' => array(
-//                    'class' => 'form-control'
-//                )
-//            ))
-//            ->add('save', SubmitType::class, array(
-//                'label' => 'Upload post!',
-//                'attr' => array(
-//                    'class' => 'btn btn-success',
-//                    'style' => 'margin-top: 10px'
-//                )
-//            ))
-//            ->getForm();
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

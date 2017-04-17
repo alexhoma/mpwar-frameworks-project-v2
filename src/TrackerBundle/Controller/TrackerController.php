@@ -22,9 +22,7 @@ class TrackerController extends Controller
     public function trackAction(Request $request)
     {
         $tracked = json_decode($request->getContent());
-
         $post = $this->getPostBySlug($tracked->postSlug);
-
         $record = new Record(
             $post,
             $tracked->device,
@@ -42,7 +40,7 @@ class TrackerController extends Controller
 
         $this->throwRecordTrackerEvent($record);
 
-        return new JsonResponse(array('tracked' => true));;
+        return new JsonResponse(array('tracked' => true));
     }
 
     /**
