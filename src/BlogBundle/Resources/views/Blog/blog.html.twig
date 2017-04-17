@@ -1,0 +1,35 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Welcome to the Blog!</h1>
+
+        <a href="{{ url('blog_list') }}">Blog</a> |
+        <a href="{{ url('post_create') }}">Create</a>
+        <a href="{{ url('tracker_dashboard') }}" target="_blank" class="pull-right">Dashboard</a>
+    </div>
+    <br>
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success fade in alert-dismissable">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {% endfor %}
+        </div>
+        <br>
+    {% endif %}
+
+    <h4>Current posts:</h4>
+    <div class="list-group">
+    {% for post in posts | reverse %}
+        <a href="{{ url('post', { 'postSlug': post.slug } ) }}" class="list-group-item">
+            <h4>{{ post.title }} <small class="pull-right">{{ post.datetime | date('d-m-Y H:m:s') }}</small></h4>
+
+            {{ post.description | striptags | slice(0, 250) }}...
+        </a>
+    {% endfor %}
+    </div>
+{% endblock %}
+

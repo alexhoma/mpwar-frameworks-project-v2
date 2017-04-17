@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Tracker Dashboard</h1>
+
+        <a href="{{ url('blog_list') }}">Blog</a> |
+        <a href="{{ url('post_create') }}">Create</a>
+        <a href="{{ url('tracker_dashboard') }}" class="pull-right">Dashboard</a>
+    </div>
+
+    <div class="row">
+        <!-- Posts list -->
+        <div class="col-sm-6">
+            <h4>Total posts: {{ posts|length }}</h4>
+
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <strong>Posts list:</strong>
+                </div>
+
+                <!-- Table -->
+                <table class="table table-stripped table-bordered">
+                    <thead>
+                    <tr>
+                        <th width="15%">Post ID</th>
+                        <th width="65%">Post</th>
+                        <th width="20%">Link</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for post in posts|reverse %}
+                        <tr>
+                            <td>{{ post.id }}</td>
+                            <td>{{ post.title }}</td>
+                            <td>
+                                <a href="{{ url('post_records', { 'postId': post.id } ) }}" class="btn btn-primary">
+                                    Detail
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Total records list -->
+        <div class="col-sm-6">
+            <h4>Total visits: {{ records|length }}</h4>
+
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <strong>Record list:</strong>
+                </div>
+
+                <!-- Table -->
+                <table class="table table-stripped table-bordered">
+                    <thead>
+                    <tr>
+                        <th width="10%">ID</th>
+                        <th width="40%">Post title</th>
+                        <th width="30%">Datetime</th>
+                        <th width="20%">Link</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for record in records|reverse %}
+                        <tr>
+                            <td>{{ record.id }}</td>
+                            <td>{{ record.post.title }}</td>
+                            <td>{{ record.datetime.date | date('d-m-Y H:m:s') }}h</td>
+                            <td>
+                                <a href="{{ url('tracker_record', { 'recordId': record.id } ) }}"
+                                   class="btn btn-primary">Detail</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
