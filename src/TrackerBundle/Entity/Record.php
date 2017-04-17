@@ -4,6 +4,7 @@
 namespace TrackerBundle\Entity;
 
 use BlogBundle\Entity\Post;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -88,7 +89,7 @@ class Record
         $this->version         = $version;
         $this->language        = $language;
         $this->cookieEnabled   = $cookieEnabled;
-        $this->datetime        = date_create(date("Y-m-d H:i:s"));
+        $this->datetime        = new DateTime('now');
     }
 
     /**
@@ -158,7 +159,7 @@ class Record
     /**
      * @return mixed
      */
-    public function getDatetime()
+    public function getDatetime(): DateTime
     {
         return $this->datetime;
     }

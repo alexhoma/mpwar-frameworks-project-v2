@@ -13,36 +13,37 @@ use TrackerBundle\Services\SearchPostBySlug;
 class TrackerController extends Controller
 {
     /**
-     * Insert registry
+     * Creates a new record when a user visits a post.
      * Handles ajax request with all user agent data
-     * Persists this data into a record table
+     * And persists this data into a record table
      *
      * @param Request $request
      * @return JsonResponse
      */
     public function trackAction(Request $request)
     {
-        $tracked = json_decode($request->getContent());
+        $trackedRecord = json_decode($request->getContent());
 
         /** @var SearchPostBySlug $searchPostBySlug */
         $searchPostBySlug = $this->get('search.post.by_slug');
-        $post = $searchPostBySlug($tracked->postSlug);
+        $post             = $searchPostBySlug($trackedRecord->postSlug);
 
         $record = new Record(
             $post,
-            $tracked->device,
-            $tracked->operatingSystem,
-            $tracked->browser,
-            $tracked->version,
-            $tracked->language,
-            $tracked->cookieEnabled
+            $trackedRecord->device,
+            $trackedRecord->operatingSystem,
+            $trackedRecord->browser,
+            $trackedRecord->version,
+            $trackedRecord->language,
+            $trackedRecord->cookieEnabled
         );
 
         /** @var CreateRecordUseCase $createRecordUseCase */
         $createRecordUseCase = $this->get('create.record');
         $createRecordUseCase($record);
 
-        return new JsonResponse(array('tracked' => true));
+        return new JsonResponse([
+            'tracked' => true
+        ]);
     }
-
 }

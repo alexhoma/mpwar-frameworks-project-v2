@@ -6,8 +6,8 @@ services:
             - "@doctrine.orm.entity_manager"
 
     alert_event_listener:
+        class: AlertBundle\EventListener\AlertEventListener
         arguments:
             - "@alert"
-        class: AlertBundle\EventListener\AlertEventListener
         tags:
             - { name: kernel.event_listener, event: record.tracked, method: callAlert }

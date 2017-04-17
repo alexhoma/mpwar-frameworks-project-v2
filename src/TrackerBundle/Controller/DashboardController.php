@@ -3,6 +3,7 @@
 namespace TrackerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use TrackerBundle\Services\ListPostRecords;
 use TrackerBundle\Services\ListPosts;
 use TrackerBundle\Services\ListRecords;
 use TrackerBundle\Services\SearchPostById;
@@ -15,6 +16,8 @@ class DashboardController extends Controller
      * Displays two lists:
      *  - Posts list
      *  - Records list
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function dashboardAction()
     {
@@ -35,6 +38,9 @@ class DashboardController extends Controller
     /**
      * Show single record details
      * Displays the user agent data of a single record
+     *
+     * @param $recordId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function recordAction($recordId)
     {
@@ -48,8 +54,12 @@ class DashboardController extends Controller
     }
 
     /**
-     * Shows a list of records related to a post
-     * The list of "visits" tracked of a post.
+     * Shows the number of "visits/records" related to a post.
+     * It gets the records from the Record Entity
+     * because the Post Entity isn't from this bundle.
+     *
+     * @param $postId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function postRecordsAction($postId)
     {
@@ -57,15 +67,13 @@ class DashboardController extends Controller
         $searchPostById = $this->get('search.post.by_id');
         $post           = $searchPostById($postId);
 
-        // get post visits (post records)
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $records       = $entityManager
-            ->getRepository('TrackerBundle\Entity\Record')
-            ->findBy(['post' => $post]);
+        /** @var ListPostRecords $listPostRecords */
+        $listPostRecords = $this->get('list.post_records');
+        $postRecords     = $listPostRecords($post);
 
         return $this->render('TrackerBundle:Tracker:postRecordsDetail.html.twig', array(
             'post' => $post,
-            'records' => $records
+            'postRecords' => $postRecords
         ));
     }
 }
