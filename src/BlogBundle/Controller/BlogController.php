@@ -3,29 +3,26 @@
 namespace BlogBundle\Controller;
 
 use BlogBundle\Entity\Post;
-use Cocur\Slugify\Slugify;
 use BlogBundle\Form\PostType;
+use BlogBundle\Services\CreatePostUseCase;
+use BlogBundle\Services\ListPosts;
+use BlogBundle\Services\SearchPostBySlug;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class BlogController extends Controller
 {
-    private $slugify;
-
-    public function __construct()
-    {
-        $this->slugify = new Slugify();
-    }
-
     /**
      * Shows post list / home blog
+     * The main view of the blog
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function blogAction()
     {
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $posts = $entityManager
-            ->getRepository('BlogBundle\Entity\Post')
-            ->findAll();
+        /** @var ListPosts $listPosts */
+        $listPosts = $this->get('blog_post.list');
+        $posts     = $listPosts();
 
         return $this->render('BlogBundle:Blog:blog.html.twig', array(
             'posts' => $posts,
@@ -40,12 +37,9 @@ class BlogController extends Controller
      */
     public function postAction($postSlug)
     {
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $post = $entityManager
-            ->getRepository('BlogBundle\Entity\Post')
-            ->findOneBy(['slug' => $postSlug]);
-
-        $this->ensurePostExists($postSlug, $post);
+        /** @var SearchPostBySlug $searchPostBySlug */
+        $searchPostBySlug = $this->get('blog_post.search.by_slug');
+        $post             = $searchPostBySlug($postSlug);
 
         return $this->render('BlogBundle:Blog:post.html.twig', array(
             'post' => $post
@@ -53,49 +47,25 @@ class BlogController extends Controller
     }
 
     /**
-     * Guard clause to ensure the post we are looking exists
-     * 
-     * @param $postSlug
-     * @param $post
-     */
-    private function ensurePostExists($postSlug, $post)
-    {
-        if (!$post) {
-            throw $this->createNotFoundException(
-                'No post found for this slug: ' . $postSlug
-            );
-        }
-    }
-
-    /**
-     * Create new post or show form
+     * Create new post | show form
+     * depends on the request method
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createPostAction(Request $request)
     {
         $post = new Post();
-
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post      = $form->getData();
-            $postTitle = $post->getTitle();
+            $post = $form->getData();
 
-            // Add post slug
-            $postSlug = $this->slugify->slugify($postTitle);
-            $post->setSlug($postSlug);
-            $post->setDatetime(date_create(date("Y-m-d H:i:s")));
-
-            $entityManager = $this->get('doctrine.orm.default_entity_manager');
-            $entityManager->persist($post);
-            $entityManager->flush();
-
-            $request
-                ->getSession()
-                ->getFlashBag()
-                ->add('success', 'Post created successfully!');
+            /** @var CreatePostUseCase $createPostUseCase */
+            $createPostUseCase = $this->get('blog_post.create');
+            $createPostUseCase($post);
+            $this->throwSuccessFlashMessage($post);
 
             return $this->redirectToRoute('blog_list');
         }
@@ -103,5 +73,19 @@ class BlogController extends Controller
         return $this->render('BlogBundle:Blog:createPost.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * Throws a success flash message
+     * when new post is created
+     *
+     * @param $post
+     */
+    private function throwSuccessFlashMessage(Post $post)
+    {
+        $this->addFlash(
+            'success',
+            'Post "' . $post->getTitle() . '" created successfully!'
+        );
     }
 }

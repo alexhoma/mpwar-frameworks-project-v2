@@ -2,6 +2,7 @@
 
 namespace BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +43,7 @@ class Post
     public function __construct()
     {
         $this->records = new ArrayCollection();
+        $this->datetime = new DateTime('now');
     }
 
     /**
@@ -115,13 +117,5 @@ class Post
     public function setDescription(string $description)
     {
         $this->description = $description;
-    }
-
-    /**
-     * @param mixed $datetime
-     */
-    public function setDatetime($datetime)
-    {
-        $this->datetime = $datetime;
     }
 }

@@ -25,7 +25,7 @@ class TrackerController extends Controller
         $trackedRecord = json_decode($request->getContent());
 
         /** @var SearchPostBySlug $searchPostBySlug */
-        $searchPostBySlug = $this->get('search.post.by_slug');
+        $searchPostBySlug = $this->get('tracker_post.search.by_slug');
         $post             = $searchPostBySlug($trackedRecord->postSlug);
 
         $record = new Record(
@@ -39,7 +39,7 @@ class TrackerController extends Controller
         );
 
         /** @var CreateRecordUseCase $createRecordUseCase */
-        $createRecordUseCase = $this->get('create.record');
+        $createRecordUseCase = $this->get('tracker_record.create');
         $createRecordUseCase($record);
 
         return new JsonResponse([

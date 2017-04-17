@@ -1,32 +1,31 @@
 services:
-  create.record:
+  tracker_record.create:
     class: TrackerBundle\Services\CreateRecordUseCase
     arguments:
       - "@doctrine.orm.entity_manager"
       - "@event_dispatcher"
-
-  list.records:
+  tracker_record.list:
     class: TrackerBundle\Services\ListRecords
     arguments:
       - "@doctrine.orm.entity_manager"
-  list.post_records:
-    class: TrackerBundle\Services\ListPostRecords
-    arguments:
-      - "@doctrine.orm.entity_manager"
-  list.posts:
-    class: TrackerBundle\Services\ListPosts
-    arguments:
-      - "@doctrine.orm.entity_manager"
-
-  search.record.by_id:
+  tracker_record.search.by_id:
     class: TrackerBundle\Services\SearchRecordById
     arguments:
       - "@doctrine.orm.entity_manager"
-  search.post.by_id:
+
+  tracker_post.records.list:
+    class: TrackerBundle\Services\ListPostRecords
+    arguments:
+      - "@doctrine.orm.entity_manager"
+  tracker_post.list:
+    class: TrackerBundle\Services\ListPosts
+    arguments:
+      - "@doctrine.orm.entity_manager"
+  tracker_post.search.by_id:
     class: TrackerBundle\Services\SearchPostById
     arguments:
       - "@doctrine.orm.entity_manager"
-  search.post.by_slug:
+  tracker_post.search.by_slug:
     class: TrackerBundle\Services\SearchPostBySlug
     arguments:
       - "@doctrine.orm.entity_manager"

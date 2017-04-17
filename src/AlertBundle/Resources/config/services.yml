@@ -1,13 +1,13 @@
 services:
-    alert:
-        class: AlertBundle\Services\Alert
-        arguments:
-            - "@mailer"
-            - "@doctrine.orm.entity_manager"
+  alert:
+     class: AlertBundle\Services\Alert
+     arguments:
+       - "@mailer"
+       - "@doctrine.orm.entity_manager"
 
-    alert_event_listener:
-        class: AlertBundle\EventListener\AlertEventListener
-        arguments:
-            - "@alert"
-        tags:
-            - { name: kernel.event_listener, event: record.tracked, method: callAlert }
+  alert_event_listener:
+     class: AlertBundle\EventListener\AlertEventListener
+     arguments:
+        - "@alert"
+     tags:
+        - { name: kernel.event_listener, event: record.tracked, method: callAlert }

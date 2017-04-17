@@ -1,7 +1,7 @@
 <?php
 
 
-namespace TrackerBundle\Services;
+namespace BlogBundle\Services;
 
 use BlogBundle\Entity\Post;
 use Doctrine\ORM\EntityManager;

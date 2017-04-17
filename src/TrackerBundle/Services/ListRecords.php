@@ -17,7 +17,7 @@ class ListRecords
         $this->entityManager = $entityManager;
     }
 
-    public function __invoke()
+    public function __invoke(): array
     {
         $records = $this->entityManager
             ->getRepository(Record::class)

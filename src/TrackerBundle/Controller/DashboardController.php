@@ -12,7 +12,7 @@ use TrackerBundle\Services\SearchRecordById;
 class DashboardController extends Controller
 {
     /**
-     * Dashboard index / registry list
+     * Dashboard index / records list
      * Displays two lists:
      *  - Posts list
      *  - Records list
@@ -22,11 +22,11 @@ class DashboardController extends Controller
     public function dashboardAction()
     {
         /** @var ListRecords $listRecords */
-        $listRecords = $this->get('list.records');
+        $listRecords = $this->get('tracker_record.list');
         $records     = $listRecords();
 
         /** @var ListPosts $listPosts */
-        $listPosts = $this->get('list.posts');
+        $listPosts = $this->get('tracker_post.list');
         $posts     = $listPosts();
 
         return $this->render('TrackerBundle:Tracker:dashboard.html.twig', array(
@@ -45,7 +45,7 @@ class DashboardController extends Controller
     public function recordAction($recordId)
     {
         /** @var SearchRecordById $searchRecordById */
-        $searchRecordById = $this->get('search.record.by_id');
+        $searchRecordById = $this->get('tracker_record.search.by_id');
         $record           = $searchRecordById($recordId);
 
         return $this->render('TrackerBundle:Tracker:recordDetail.html.twig', array(
@@ -64,11 +64,11 @@ class DashboardController extends Controller
     public function postRecordsAction($postId)
     {
         /** @var SearchPostById $searchPostById */
-        $searchPostById = $this->get('search.post.by_id');
+        $searchPostById = $this->get('tracker_post.search.by_id');
         $post           = $searchPostById($postId);
 
         /** @var ListPostRecords $listPostRecords */
-        $listPostRecords = $this->get('list.post_records');
+        $listPostRecords = $this->get('tracker_post.records.list');
         $postRecords     = $listPostRecords($post);
 
         return $this->render('TrackerBundle:Tracker:postRecordsDetail.html.twig', array(
