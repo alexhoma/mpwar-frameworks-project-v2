@@ -30,8 +30,7 @@ class TrackerController extends Controller
             $tracked->browser,
             $tracked->version,
             $tracked->language,
-            $tracked->cookieEnabled,
-            date_create(date("Y-m-d H:i:s"))
+            $tracked->cookieEnabled
         );
 
         $entityManager = $this->get('doctrine.orm.default_entity_manager');

@@ -70,7 +70,6 @@ class Record
      * @param $version
      * @param $language
      * @param $cookieEnabled
-     * @param $datetime
      */
     public function __construct(
         $post,
@@ -79,9 +78,9 @@ class Record
         $browser,
         $version,
         $language,
-        $cookieEnabled,
-        $datetime
-    ) {
+        $cookieEnabled
+    )
+    {
         $this->post            = $post;
         $this->device          = $device;
         $this->operatingSystem = $operatingSystem;
@@ -89,7 +88,7 @@ class Record
         $this->version         = $version;
         $this->language        = $language;
         $this->cookieEnabled   = $cookieEnabled;
-        $this->datetime        = $datetime;
+        $this->datetime        = date_create(date("Y-m-d H:i:s"));
     }
 
     /**
