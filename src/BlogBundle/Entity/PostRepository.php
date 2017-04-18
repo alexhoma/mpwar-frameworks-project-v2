@@ -17,7 +17,7 @@ interface PostRepository
      *
      * @return array
      */
-    public function list(): array;
+    public function listPublished(): array;
 
     /**
      * Finds a post by its slug

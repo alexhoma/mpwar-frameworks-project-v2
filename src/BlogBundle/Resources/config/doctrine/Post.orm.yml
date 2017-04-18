@@ -16,5 +16,9 @@ BlogBundle\Entity\Post:
       length: 100
     description:
       type: text
-    datetime:
+    published:
+      type: boolean
+      default: false
+    createdAt:
       type: datetime
+      column: created_at

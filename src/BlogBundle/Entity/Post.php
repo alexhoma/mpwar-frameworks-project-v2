@@ -3,7 +3,6 @@
 namespace BlogBundle\Entity;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 class Post
@@ -12,21 +11,21 @@ class Post
     private $slug;
     private $title;
     private $description;
-    private $datetime;
+    private $published;
+    private $createdAt;
 
     /**
      * Post constructor.
      */
     public function __construct()
     {
-        $this->records = new ArrayCollection();
-        $this->datetime = new DateTime('now');
+        $this->createdAt = new DateTime('now');
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -58,21 +57,21 @@ class Post
     /**
      * @return mixed
      */
-    public function getRecords()
+    public function getPublished()
     {
-        return $this->records;
+        return $this->published;
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
-    public function getDatetime()
+    public function getCreatedAt(): DateTime
     {
-        return $this->datetime;
+        return $this->createdAt;
     }
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      */
     public function setSlug(string $slug)
     {
@@ -80,7 +79,7 @@ class Post
     }
 
     /**
-     * @param mixed $title
+     * @param string $title
      */
     public function setTitle(string $title)
     {
@@ -88,10 +87,18 @@ class Post
     }
 
     /**
-     * @param mixed $description
+     * @param string $description
      */
     public function setDescription(string $description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @param bool $published
+     */
+    public function setPublished(bool $published)
+    {
+        $this->published = $published;
     }
 }

@@ -18,7 +18,7 @@ class ListPosts
 
     public function __invoke(): array
     {
-        $records = $this->postRepository->list();
+        $records = $this->postRepository->listPublished();
 
         return $records;
     }

@@ -25,7 +25,7 @@
     <div class="list-group">
     {% for post in posts | reverse %}
         <a href="{{ url('post', { 'postSlug': post.slug } ) }}" class="list-group-item">
-            <h4 style="margin-top: 0">{{ post.title }} <small class="pull-right">{{ post.datetime | date('d-m-Y H:m:s') }}</small></h4>
+            <h4 style="margin-top: 0">{{ post.title }} <small class="pull-right">{{ post.createdAt | date('d-m-Y H:m:s') }}</small></h4>
 
             {{ post.description | striptags | slice(0, 250) }}...
         </a>

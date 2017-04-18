@@ -10,6 +10,9 @@ use TrackerBundle\Entity\RecordRepository;
 
 class DoctrineRecordRepository extends EntityRepository implements RecordRepository
 {
+    /**
+     * {@inheritdoc}
+     */
     public function save(Record $record)
     {
         $entityManager = $this->getEntityManager();
@@ -17,16 +20,25 @@ class DoctrineRecordRepository extends EntityRepository implements RecordReposit
         $entityManager->flush($record);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function list(): array
     {
         return $this->findAll();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function findById(int $id)
     {
         return $this->find($id);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function findByPost(Post $post): array
     {
         return $this->findBy([
