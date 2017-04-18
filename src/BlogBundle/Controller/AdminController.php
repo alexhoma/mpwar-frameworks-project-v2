@@ -22,9 +22,9 @@ class AdminController extends Controller
      */
     public function adminAction()
     {
-        /** @var ListAllPosts $listPosts */
+        /** @var ListAllPosts $listAllPosts */
         $listAllPosts = $this->get('blog_post.list.all');
-        $posts     = $listAllPosts();
+        $posts        = $listAllPosts();
 
         return $this->render('BlogBundle:Admin:list.html.twig', array(
             'posts' => $posts,
