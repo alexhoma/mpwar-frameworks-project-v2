@@ -1,5 +1,6 @@
 BlogBundle\Entity\Post:
   type: entity
+  repositoryClass: BlogBundle\Repository\DoctrinePostRepository
   table: post
   id:
     id:

@@ -3,32 +3,31 @@
 namespace BlogBundle\Services;
 
 use BlogBundle\Entity\Post;
+use BlogBundle\Entity\PostRepository;
 use Cocur\Slugify\Slugify;
-use Doctrine\ORM\EntityManager;
 
 
 class CreatePostUseCase
 {
-    private $entityManager;
+    private $postRepository;
     private $slugify;
 
     public function __construct(
-        EntityManager $entityManager,
+        PostRepository $postRepository,
         Slugify $slugify
     )
     {
-        $this->entityManager = $entityManager;
-        $this->slugify = $slugify;
+        $this->postRepository = $postRepository;
+        $this->slugify        = $slugify;
     }
 
     public function __invoke(Post $post)
     {
         // set slug
         $postTitle = $post->getTitle();
-        $postSlug = $this->slugify->slugify($postTitle);
+        $postSlug  = $this->slugify->slugify($postTitle);
         $post->setSlug($postSlug);
 
-        $this->entityManager->persist($post);
-        $this->entityManager->flush($post);
+        $this->postRepository->save($post);
     }
 }

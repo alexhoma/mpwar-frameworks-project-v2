@@ -3,25 +3,22 @@
 
 namespace BlogBundle\Services;
 
-use BlogBundle\Entity\Post;
-use Doctrine\ORM\EntityManager;
+use BlogBundle\Entity\PostRepository;
 
 class ListPosts
 {
-    private $entityManager;
+    private $postRepository;
 
     public function __construct(
-        EntityManager $entityManager
+        PostRepository $postRepository
     )
     {
-        $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
     }
 
     public function __invoke(): array
     {
-        $records = $this->entityManager
-            ->getRepository(Post::class)
-            ->findAll();
+        $records = $this->postRepository->list();
 
         return $records;
     }

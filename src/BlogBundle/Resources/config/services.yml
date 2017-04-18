@@ -1,15 +1,22 @@
-# Blog services
 services:
   blog_post.create:
     class: BlogBundle\Services\CreatePostUseCase
     arguments:
-      - "@doctrine.orm.entity_manager"
+      - "@blog_post.repository"
       - "@slugify"
   blog_post.list:
     class: BlogBundle\Services\ListPosts
     arguments:
-      - "@doctrine.orm.entity_manager"
+      - "@blog_post.repository"
   blog_post.search.by_slug:
     class: BlogBundle\Services\SearchPostBySlug
     arguments:
-      - "@doctrine.orm.entity_manager"
+      - "@blog_post.repository"
+
+  blog_post.repository:
+    class: BlogBundle\Repository\DoctrinePostRepository
+    factory:
+      - "@doctrine.orm.default_entity_manager"
+      - "getRepository"
+    arguments:
+      - "BlogBundle:Post"

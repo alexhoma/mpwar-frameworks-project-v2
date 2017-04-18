@@ -1,35 +1,32 @@
 <?php
 
-
 namespace BlogBundle\Services;
 
-
-use BlogBundle\Entity\Post;
-use Doctrine\ORM\EntityManager;
+use BlogBundle\Entity\PostRepository;
 
 class SearchPostBySlug
 {
-    private $entityManager;
+    private $postRepository;
 
     public function __construct(
-        EntityManager $entityManager
+        PostRepository $postRepository
     )
     {
-        $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
     }
 
     public function __invoke(string $slug)
     {
-        $post = $this->entityManager
-            ->getRepository(Post::class)
-            ->findOneBy(['slug' => $slug]);
-
+        $post = $this->postRepository->findBySlug($slug);
         $this->ensurePostExists($post);
 
         return $post;
     }
 
     /**
+     * Guard clause to ensure if a post exists
+     * otherwise throws a NotFoundException
+     *
      * @param $post
      */
     private function ensurePostExists($post)
