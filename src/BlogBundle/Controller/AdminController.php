@@ -5,7 +5,7 @@ namespace BlogBundle\Controller;
 use BlogBundle\Entity\Post;
 use BlogBundle\Form\PostType;
 use BlogBundle\Services\CreatePostUseCase;
-use BlogBundle\Services\ListPosts;
+use BlogBundle\Services\ListAllPosts;
 use BlogBundle\Services\SearchPostBySlug;
 use BlogBundle\Services\UpdatePostUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,9 +22,9 @@ class AdminController extends Controller
      */
     public function adminAction()
     {
-        /** @var ListPosts $listPosts */
-        $listPosts = $this->get('blog_post.list');
-        $posts     = $listPosts();
+        /** @var ListAllPosts $listPosts */
+        $listAllPosts = $this->get('blog_post.list.all');
+        $posts     = $listAllPosts();
 
         return $this->render('BlogBundle:Admin:list.html.twig', array(
             'posts' => $posts,

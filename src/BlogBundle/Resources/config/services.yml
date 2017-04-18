@@ -10,8 +10,12 @@ services:
       - "@blog_post.repository"
       - "@slugify"
 
-  blog_post.list:
-    class: BlogBundle\Services\ListPosts
+  blog_post.list.all:
+    class: BlogBundle\Services\ListAllPosts
+    arguments:
+      - "@blog_post.repository"
+  blog_post.list.published:
+    class: BlogBundle\Services\ListPublishedPosts
     arguments:
       - "@blog_post.repository"
   blog_post.find.by_slug:

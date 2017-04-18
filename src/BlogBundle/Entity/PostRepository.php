@@ -17,6 +17,13 @@ interface PostRepository
      *
      * @return array
      */
+    public function listAll(): array;
+
+    /**
+     * Lists published posts
+     *
+     * @return array
+     */
     public function listPublished(): array;
 
     /**

@@ -22,6 +22,14 @@ class DoctrinePostRepository extends EntityRepository implements PostRepository
     /**
      * {@inheritdoc}
      */
+    public function listAll(): array
+    {
+        return $this->findAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function listPublished(): array
     {
         return $this->findBy([
