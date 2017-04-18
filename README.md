@@ -7,7 +7,7 @@ Blog visits tracker application based on the Symfony Standard Edition.
 Initialize
 --------------
 
-Open your terminal and run the following lines:
+Open your terminal and run the following:
 
 ```
 $ git clone https://github.com/alexhoma/mpwar-frameworks-project-v2.git
@@ -15,7 +15,7 @@ $ composer update
 $ php bin/console doctrine:schema:create
 ```
 
-Include the following twig view (it's a JS snippet) on the post template view of your blog: (It's included by default on this example)
+Include the following snippet on your post view template: (is included by default on this example)
 
 ```
 {% include("TrackerBundle:Tracker:tracker.html.twig") %}
@@ -30,26 +30,26 @@ http://{LOCALHOST}:{PORT}/web/app_dev.php/blog
 Context
 --------------
   * **BlogBundle** <br>
-    This is supposed to be part of the original application, so it's a very simple blog example to test our TrackerBundle.<br>
+    This is supposed to be the original application, so it's a very simple blog example to test our TrackerBundle.<br>
     Composed by one entity called `Post`.<br>
-    It comes with a Blog section and Admin section:
-      * **In Admin**: you can create new posts, edit, and list all of them.
-      * **In Blog**: you can list only published posts and read them.
+    The bundle comes with two sections:
+      * **Admin**: where you can create new posts, edit, and list all of them.
+      * **Blog**: where you can list only published posts and read them.
        
     The admin section could be in an AdminBundle, but I just wanted to keep things simple.
     
   * **TrackerBundle** <br> 
-    This is our visits tracker. It takes the User Agent via javascript and saves it to our application.<br>
+    This is our visits tracker. It takes the User Agent via javascript and saves it to our database.<br>
     Composed by a single Entity `Record` related to the blog's `Post`.<br>
     It comes with a dashboard were we can see:
       * All recorded visits in our blog.
       * A detail view of every record/visit (User agent stuff)
       * And how many records/visits a single post has had.
       
-    I know this could be achieved in a more efficient way using something like this `$request->headers->get('User-Agent')` and parsing it. But it was just an excuse to start this exercise and also play with AJAX requests.
+    This could be achieved in a more efficient way using something like this `$request->headers->get('User-Agent')` and parsing it. But it was just an excuse to start this exercise and also play with AJAX requests.
     
   * **AlertBundle** <br> 
-  This bundle tells us if we have achieved a certain number of visits in our posts, sending an email with the info via SwiftMailer.<br>
+  This bundle tells us if we have reached a certain number of visits in our posts, sending an email with the info via SwiftMailer.<br>
   It has a listener triggered just after a record/visit is saved on the database.<br>
   By default we will receive an email every 10, 50 and 100 visits of each post.
   
@@ -57,8 +57,9 @@ Context
   To see some screenshots of the application refer to the previous exercise readme: [mpwar-frameworks-project](https://github.com/alexhoma/mpwar-frameworks-project#pages)
 
 
-Changelog
---------------
+Changelog 
+-------------
+Improved things since the first version:
   * Clean unused code and format code style.
   * Document better methods and classes.
   * Add an admin page to the Blog Bundle, so you can edit posts.
@@ -88,5 +89,5 @@ Docs
 
 Support
 ---------------
-Just email me: [alexcm.14@gmail.com](alexcm.14@gmail.com)
+Just email me [alexcm.14@gmail.com](alexcm.14@gmail.com) :P
 
