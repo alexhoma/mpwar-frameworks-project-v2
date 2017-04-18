@@ -45,7 +45,7 @@ class DashboardController extends Controller
     public function recordAction($recordId)
     {
         /** @var SearchRecordById $searchRecordById */
-        $searchRecordById = $this->get('tracker_record.search.by_id');
+        $searchRecordById = $this->get('tracker_record.find.by_id');
         $record           = $searchRecordById($recordId);
 
         return $this->render('TrackerBundle:Tracker:recordDetail.html.twig', array(
@@ -64,11 +64,11 @@ class DashboardController extends Controller
     public function postRecordsAction($postId)
     {
         /** @var SearchPostById $searchPostById */
-        $searchPostById = $this->get('tracker_post.search.by_id');
+        $searchPostById = $this->get('tracker_post.find.by_id');
         $post           = $searchPostById($postId);
 
         /** @var ListPostRecords $listPostRecords */
-        $listPostRecords = $this->get('tracker_post.records.list');
+        $listPostRecords = $this->get('tracker_record.find.by_post');
         $postRecords     = $listPostRecords($post);
 
         return $this->render('TrackerBundle:Tracker:postRecordsDetail.html.twig', array(

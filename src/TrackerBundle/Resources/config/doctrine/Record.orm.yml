@@ -1,5 +1,6 @@
 TrackerBundle\Entity\Record:
   type: entity
+  repositoryClass: TrackerBundle\Repository\DoctrineRecordRepository
   table: record
   id:
     id:

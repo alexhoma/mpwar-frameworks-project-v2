@@ -8,7 +8,7 @@ services:
     class: BlogBundle\Services\ListPosts
     arguments:
       - "@blog_post.repository"
-  blog_post.search.by_slug:
+  blog_post.find.by_slug:
     class: BlogBundle\Services\SearchPostBySlug
     arguments:
       - "@blog_post.repository"

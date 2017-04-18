@@ -25,7 +25,7 @@ class TrackerController extends Controller
         $trackedRecord = json_decode($request->getContent());
 
         /** @var SearchPostBySlug $searchPostBySlug */
-        $searchPostBySlug = $this->get('tracker_post.search.by_slug');
+        $searchPostBySlug = $this->get('tracker_post.find.by_slug');
         $post             = $searchPostBySlug($trackedRecord->postSlug);
 
         $record = new Record(

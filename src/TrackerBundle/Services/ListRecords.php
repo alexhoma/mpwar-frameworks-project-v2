@@ -1,27 +1,24 @@
 <?php
 
-
 namespace TrackerBundle\Services;
 
-use Doctrine\ORM\EntityManager;
-use TrackerBundle\Entity\Record;
+use TrackerBundle\Entity\RecordRepository;
+
 
 class ListRecords
 {
-    private $entityManager;
+    private $recordRepository;
 
     public function __construct(
-        EntityManager $entityManager
+        RecordRepository $recordRepository
     )
     {
-        $this->entityManager = $entityManager;
+        $this->recordRepository = $recordRepository;
     }
 
     public function __invoke(): array
     {
-        $records = $this->entityManager
-            ->getRepository(Record::class)
-            ->findAll();
+        $records = $this->recordRepository->list();
 
         return $records;
     }

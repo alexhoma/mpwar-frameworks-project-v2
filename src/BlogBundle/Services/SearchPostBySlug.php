@@ -18,7 +18,7 @@ class SearchPostBySlug
     public function __invoke(string $slug)
     {
         $post = $this->postRepository->findBySlug($slug);
-        $this->ensurePostExists($post);
+        $this->ensurePostExists($post, $slug);
 
         return $post;
     }
@@ -28,11 +28,14 @@ class SearchPostBySlug
      * otherwise throws a NotFoundException
      *
      * @param $post
+     * @param $slug
      */
-    private function ensurePostExists($post)
+    private function ensurePostExists($post, $slug)
     {
         if (!$post) {
-            throw $this->createNotFoundException('Post not found!');
+            throw $this->createNotFoundException(
+                'Post with slug: "' . $slug . '" not found!'
+            );
         }
     }
 }

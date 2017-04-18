@@ -38,7 +38,7 @@ class BlogController extends Controller
     public function postAction($postSlug)
     {
         /** @var SearchPostBySlug $searchPostBySlug */
-        $searchPostBySlug = $this->get('blog_post.search.by_slug');
+        $searchPostBySlug = $this->get('blog_post.find.by_slug');
         $post             = $searchPostBySlug($postSlug);
 
         return $this->render('BlogBundle:Blog:post.html.twig', array(

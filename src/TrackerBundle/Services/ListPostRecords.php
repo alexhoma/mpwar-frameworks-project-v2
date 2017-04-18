@@ -1,29 +1,25 @@
 <?php
 
-
 namespace TrackerBundle\Services;
 
-
 use BlogBundle\Entity\Post;
-use Doctrine\ORM\EntityManager;
-use TrackerBundle\Entity\Record;
+use TrackerBundle\Entity\RecordRepository;
+
 
 class ListPostRecords
 {
-    private $entityManager;
+    private $recordRepository;
 
     public function __construct(
-        EntityManager $entityManager
+        RecordRepository $recordRepository
     )
     {
-        $this->entityManager = $entityManager;
+        $this->recordRepository = $recordRepository;
     }
 
     public function __invoke(Post $post)
     {
-        $records = $this->entityManager
-            ->getRepository(Record::class)
-            ->findBy(['post' => $post]);
+        $records = $this->recordRepository->findByPost($post);
 
         return $records;
     }

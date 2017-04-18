@@ -1,31 +1,41 @@
 services:
+  # Tracker Record
   tracker_record.create:
     class: TrackerBundle\Services\CreateRecordUseCase
     arguments:
-      - "@doctrine.orm.entity_manager"
+      - "@tracker_record.repository"
       - "@event_dispatcher"
   tracker_record.list:
     class: TrackerBundle\Services\ListRecords
     arguments:
-      - "@doctrine.orm.entity_manager"
-  tracker_record.search.by_id:
+      - "@tracker_record.repository"
+  tracker_record.find.by_id:
     class: TrackerBundle\Services\SearchRecordById
     arguments:
-      - "@doctrine.orm.entity_manager"
-
-  tracker_post.records.list:
+      - "@tracker_record.repository"
+  tracker_record.find.by_post:
     class: TrackerBundle\Services\ListPostRecords
     arguments:
-      - "@doctrine.orm.entity_manager"
+      - "@tracker_record.repository"
+  tracker_record.repository:
+    class: TrackerBundle\Repository\DoctrineRecordRepository
+    factory:
+      - "@doctrine.orm.default_entity_manager"
+      - "getRepository"
+    arguments:
+      - "TrackerBundle:Record"
+
+  # Tracker Post
   tracker_post.list:
     class: TrackerBundle\Services\ListPosts
     arguments:
       - "@doctrine.orm.entity_manager"
-  tracker_post.search.by_id:
+  tracker_post.find.by_id:
     class: TrackerBundle\Services\SearchPostById
     arguments:
       - "@doctrine.orm.entity_manager"
-  tracker_post.search.by_slug:
+  tracker_post.find.by_slug:
     class: TrackerBundle\Services\SearchPostBySlug
     arguments:
       - "@doctrine.orm.entity_manager"
+

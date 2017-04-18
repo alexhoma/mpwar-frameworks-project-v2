@@ -6,30 +6,28 @@ namespace TrackerBundle\Services;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TrackerBundle\Entity\Record;
+use TrackerBundle\Entity\RecordRepository;
 use TrackerBundle\Event\RecordTrackedEvent;
 
 class CreateRecordUseCase
 {
-    private $entityManager;
     private $eventDispatcher;
+    private $recordRepository;
 
     public function __construct(
-        EntityManager $entityManager,
+        RecordRepository $recordRepository,
         EventDispatcherInterface $eventDispatcher
     )
     {
-        $this->entityManager = $entityManager;
+        $this->recordRepository = $recordRepository;
         $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(Record $record)
     {
-        $this->entityManager->persist($record);
-        $this->entityManager->flush($record);
-
+        $this->recordRepository->save($record);
         $this->throwRecordTrackerEvent($record);
     }
-
 
     /**
      * Throws an event when a record is created
