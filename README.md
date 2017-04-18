@@ -30,9 +30,13 @@ http://{LOCALHOST}:{PORT}/web/app_dev.php/blog
 Context
 --------------
   * **BlogBundle** <br>
-  This is supposed to be part of the original application, so it's a very simple blog example to test our TrackerBundle.<br>
-  Here you can create posts, list and read them (not delete or update).<br>
-  It only has one entity called `Post`.
+    This is supposed to be part of the original application, so it's a very simple blog example to test our TrackerBundle.<br>
+    Composed by one entity called `Post`.<br>
+    It comes with a Blog section and Admin section:
+      * **In Admin**: you can create new posts, edit, and list all of them.
+      * **In Blog**: you can list only published posts and read them.
+       
+    The admin section could be in an AdminBundle, but I just wanted to keep things simple.
     
   * **TrackerBundle** <br> 
     This is our visits tracker. It takes the User Agent via javascript and saves it to our application.<br>
@@ -57,6 +61,7 @@ Changelog
 --------------
   * Clean unused code and format code style.
   * Document better methods and classes.
+  * Add an admin page to the Blog Bundle, so you can edit posts.
   * Type hinting (I'm running PHP7, so I omitted PHP7.1 type hinting intentionally)
   * Rename non semantic variables and constants, specially `$em`, this one sucks!
   * Move form creations outside the Controller, as a FormTypes.
