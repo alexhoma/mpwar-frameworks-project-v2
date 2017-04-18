@@ -9,9 +9,9 @@ class AlertEventListener
 {
     private $alert;
 
-    public function __construct(Alert $anAlert)
+    public function __construct(Alert $alert)
     {
-        $this->alert = $anAlert;
+        $this->alert = $alert;
     }
 
     public function callAlert($event)
