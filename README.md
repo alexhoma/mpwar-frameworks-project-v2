@@ -54,7 +54,7 @@ Context
   By default we will receive an email every 10, 50 and 100 visits of each post.
   
   ### Page examples
-  To see some screenshots of the application refer to the previous exercise readme: [mpwar-frameworks-project](https://github.com/alexhoma/mpwar-frameworks-project)
+  To see some screenshots of the application refer to the previous exercise readme: [mpwar-frameworks-project](https://github.com/alexhoma/mpwar-frameworks-project#pages)
 
 
 Changelog
