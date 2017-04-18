@@ -5,7 +5,7 @@ namespace BlogBundle\Services;
 
 use BlogBundle\Entity\PostRepository;
 
-class ListPosts
+class ListPublishedPosts
 {
     private $postRepository;
 

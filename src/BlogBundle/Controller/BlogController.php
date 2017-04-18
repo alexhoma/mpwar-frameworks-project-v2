@@ -2,7 +2,7 @@
 
 namespace BlogBundle\Controller;
 
-use BlogBundle\Services\ListPosts;
+use BlogBundle\Services\ListPublishedPosts;
 use BlogBundle\Services\SearchPostBySlug;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -10,16 +10,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class BlogController extends Controller
 {
     /**
-     * Shows post list / home blog
+     * Shows posts published list
      * The main view of the blog
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function blogAction()
     {
-        /** @var ListPosts $listPosts */
-        $listPosts = $this->get('blog_post.list');
-        $posts     = $listPosts();
+        /** @var ListPublishedPosts $listPublishedPosts */
+        $listPublishedPosts = $this->get('blog_post.list.published');
+        $posts              = $listPublishedPosts();
 
         return $this->render('BlogBundle:Blog:list.html.twig', array(
             'posts' => $posts,
