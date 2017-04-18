@@ -1,0 +1,9 @@
+{% if app.session.flashBag.has('success') %}
+    <div class="alert alert-success fade in alert-dismissable">
+        {% for msg in app.session.flashBag.get('success') %}
+            {{ msg }}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {% endfor %}
+    </div>
+    <br>
+{% endif %}

@@ -1,0 +1,29 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+    {% include("BlogBundle:includes:menu.html.twig") with {'title':'Admin page'} %}
+
+    {% include("BlogBundle:includes:flash.html.twig") %}
+
+    <h4>Current posts:</h4>
+    <div class="list-group">
+        {% for post in posts | reverse %}
+            <div class="list-group-item">
+                <h4 style="margin-top: 0">{{ post.title }} <small class="pull-right">{{ post.createdAt | date('d-m-Y H:m:s') }}</small></h4>
+
+                <div class="text-right">
+                    <i class="glyphicon glyphicon-edit"></i>
+                    <a href="{{ url('post_edit', { 'postSlug': post.slug } ) }}">Edit post</a> |
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                    <a href="{{ url('post', { 'postSlug': post.slug } ) }}">See post</a>
+                </div>
+            </div>
+        {% else %}
+            <a href="{{ url('post_create') }}" class="list-group-item">
+                No posts created yet. Click here to create a new one.
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

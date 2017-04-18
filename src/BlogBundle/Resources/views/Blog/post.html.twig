@@ -3,18 +3,13 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
-    <div class="page-header">
-        <h1>{{ post.title }}</h1>
+    {% include("BlogBundle:includes:menu.html.twig") with {'title': post.title } %}
 
-        <a href="{{ url('blog_list') }}">Blog</a> |
-        <a href="{{ url('post_create') }}">Create</a>
-        <a href="{{ url('tracker_dashboard') }}" target="_blank" class="pull-right">Dashboard</a>
-    </div>
+    {% include("BlogBundle:includes:flash.html.twig") %}
 
     <div>{{ post.description | raw }}</div>
-
     <br>
-    <b>Date: </b>{{ post.createdAt | date('d-m-Y H:m:s') }}
+    <b><i class="glyphicon glyphicon-calendar"></i>  Date: </b>{{ post.createdAt | date('d-m-Y H:m:s') }}<br>
 
 {% endblock %}
 

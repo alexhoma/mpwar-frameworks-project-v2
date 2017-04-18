@@ -4,6 +4,12 @@ services:
     arguments:
       - "@blog_post.repository"
       - "@slugify"
+  blog_post.update:
+    class: BlogBundle\Services\UpdatePostUseCase
+    arguments:
+      - "@blog_post.repository"
+      - "@slugify"
+
   blog_post.list:
     class: BlogBundle\Services\ListPosts
     arguments:

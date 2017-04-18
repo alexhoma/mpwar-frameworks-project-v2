@@ -12,11 +12,11 @@ class DoctrinePostRepository extends EntityRepository implements PostRepository
     /**
      * {@inheritdoc}
      */
-    public function save(Post $post)
+    public function findBySlug(string $slug)
     {
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($post);
-        $entityManager->flush($post);
+        return $this->findOneBy([
+            'slug' => $slug
+        ]);
     }
 
     /**
@@ -32,10 +32,19 @@ class DoctrinePostRepository extends EntityRepository implements PostRepository
     /**
      * {@inheritdoc}
      */
-    public function findBySlug(string $slug)
+    public function save(Post $post)
     {
-        return $this->findOneBy([
-            'slug' => $slug
-        ]);
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($post);
+        $entityManager->flush($post);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function update(Post $post)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->flush($post);
     }
 }

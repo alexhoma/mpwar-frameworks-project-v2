@@ -5,12 +5,12 @@ namespace BlogBundle\Entity;
 interface PostRepository
 {
     /**
-     * Persists a post into database
+     * Finds a post by its slug
      *
-     * @param Post $post
+     * @param string $slug
      * @return mixed
      */
-    public function save(Post $post);
+    public function findBySlug(string $slug);
 
     /**
      * Lists all posts
@@ -20,10 +20,18 @@ interface PostRepository
     public function listPublished(): array;
 
     /**
-     * Finds a post by its slug
+     * Persists a post into database
      *
-     * @param string $slug
+     * @param Post $post
      * @return mixed
      */
-    public function findBySlug(string $slug);
+    public function save(Post $post);
+
+    /**
+     * Updates a Post
+     *
+     * @param Post $post
+     * @return Post
+     */
+    public function update(Post $post);
 }

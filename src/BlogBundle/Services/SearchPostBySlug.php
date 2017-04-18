@@ -3,6 +3,7 @@
 namespace BlogBundle\Services;
 
 use BlogBundle\Entity\PostRepository;
+use Doctrine\ORM\EntityNotFoundException;
 
 class SearchPostBySlug
 {
@@ -25,15 +26,16 @@ class SearchPostBySlug
 
     /**
      * Guard clause to ensure if a post exists
-     * otherwise throws a NotFoundException
+     * otherwise throws an EntityNotFoundException
      *
      * @param $post
      * @param $slug
+     * @throws EntityNotFoundException
      */
     private function ensurePostExists($post, $slug)
     {
         if (!$post) {
-            throw $this->createNotFoundException(
+            throw new EntityNotFoundException(
                 'Post with slug: "' . $slug . '" not found!'
             );
         }
