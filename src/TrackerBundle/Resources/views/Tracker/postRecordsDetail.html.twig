@@ -3,11 +3,7 @@
 {% block title %}Record detail{% endblock %}
 
 {% block body %}
-    <div class="page-header">
-        <h1>Post records</h1>
-
-        <a href="{{ url('tracker_dashboard') }}">< Back to dashboard</a>
-    </div>
+    {% include("TrackerBundle:includes:menu.html.twig") with {'title': 'Tracker' } %}
 
     <h4>Post title: {{ post.title }}</h4>
     <h4>Visits: {{ postRecords|length }}</h4>

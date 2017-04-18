@@ -3,12 +3,15 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
-    {% include("BlogBundle:includes:menu.html.twig") with {'title': post.title } %}
+    {% include("BlogBundle:includes:menu.html.twig") with {'title': 'My blog!' } %}
 
     {% include("BlogBundle:includes:flash.html.twig") %}
 
-    <div>{{ post.description | raw }}</div>
+    <h3 class="text-center">{{ post.title }}</h3>
+    <hr>
     <br>
+    <div>{{ post.description | raw }}</div>
+    <br><br>
     <b><i class="glyphicon glyphicon-calendar"></i>  Date: </b>{{ post.createdAt | date('d-m-Y H:m:s') }}<br>
 
 {% endblock %}

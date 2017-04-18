@@ -1,8 +1,9 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    {% include("BlogBundle:includes:menu.html.twig") with {'title': 'Edit post' } %}
+    {% include("BlogBundle:includes:menu.html.twig") with {'title': 'Admin' } %}
 
+    <h4>Edit post:</h4>
     {{ form_start(form) }}
         {{ form_row(form.title, {'attr': {'class': 'form-control'}}) }}<br>
         {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}<br>
